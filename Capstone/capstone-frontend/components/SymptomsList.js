@@ -1,32 +1,31 @@
-import {
-  StyleSheet,
-  Text,
-  Button,
-  View,
-  FlatList,
-  TextInput,
-} from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, TextInput, Button } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
-// import Symptom from "./Symptom";
 
-function SymptomsList(props) {
-  const symptomsData = props.symptomsData;
+import Home from "./Home";
+import TriggersList from "./TriggersList";
+import Symptom from "./Symptom";
 
-  // const symptomsDataHardCoded = [
-  //   {
-  //     id: 1,
-  //     user_id: 3,
-  //     name: "cough",
-  //     rating_type: "num",
-  //   },
-  //   {
-  //     id: 2,
-  //     user_id: 4,
-  //     name: "sneeze",
-  //     rating_type: "num",
-  //   },
-  // ];
+import { useNavigation } from "@react-navigation/native";
 
+const SymptomsList = () => {
+  //buttons to navigate to other screens:
+  const navigation = useNavigation();
+
+  const symptomsDataHardCoded = [
+    {
+      id: 1,
+      name: "cough",
+    },
+    {
+      id: 2,
+      name: "sneeze",
+    },
+  ];
+  //state for text input
+  const [enteredSymptomText, setEnteredSymptomText] = useState("");
   const [symptomsData, setSymptomsData] = useState(symptomsDataHardCoded);
 
   // for symptom text input:
@@ -39,57 +38,58 @@ function SymptomsList(props) {
   function addSymptomHandler() {
     //CALL API --> ADD NEW SYMPTOM TO DB
     //update symptomsData - append new symptom
-
-    const newId = symptomsData.length;
-    const newSymp = {
-      id: newId,
-      user_id: 4,
+    //THIS IS JUST TO GET A UNIQUE ID, WHEN CONNECTED TO API DELETE THIS
+    let newId = symptomsData.length + 10; // change to get id from api
+    const newSymptom = {
+      id: newId, // change to get id from api
       name: enteredSymptomText,
-      rating_type: "num",
     };
     setSymptomsData((currentSymptomsData) => [
       ...currentSymptomsData,
-      newSymp,
-      // enteredSymptomText,
+      newSymptom,
     ]);
   }
 
-  // // const symptomsData = props.symptomsData;
-  // // console.log(symptomsData);
-  // // const renderItem = ({ item }) => <Symptom name={item.name} />;
-  // const renderItem = ({ item }) => (
-  //   <Symptom
-  //     name={item.name}
-  //     id={item.id}
-  //     userId={item.user_id}
-  //     ratingType={item.rating_type}
-  //   />
-  // );
+  function deleteSymptomHandler(id) {
+    console.log("delete symptom!!");
+  }
 
   return (
-    <View>
+    // <SafeAreaView>
+    <View style={styles.appContainer}>
+      <Text>This is symptomsList</Text>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.textInput}
           placeholder="Enter a Symptom"
-          onChangeText={props.symptomInputCallback}
+          onChangeText={symptomInputHandler}
         />
-        <Button title="Add Symptom" onPress={props.addSymptomCallback} />
+        <Button title="Add Symptom" onPress={addSymptomHandler} />
       </View>
+      <View style={styles.symptomsContainer}>
+        {symptomsData.map((symptom) => (
+          <Symptom
+            key={symptom.id}
+            id={symptom.id}
+            name={symptom.name}
+            deleteSymptomCallback={deleteSymptomHandler}
+          />
 
-      <Text> Symptoms List:</Text>
-      {/* <FlatList
-        data={symptomsData}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-      /> */}
-
-      {symptomsData}
+          // <View>
+          //   <Text key={symptom.id}>{symptom.name}</Text>
+          //   <Button title="Delete" onPress={deleteSymptomHandler} />
+          // </View>
+        ))}
+      </View>
+      <Button onPress={() => navigation.navigate("Home")} title="Home!" />
+      <Button
+        onPress={() => navigation.navigate("Triggers")}
+        title="Triggers List!"
+      />
     </View>
+    // </SafeAreaView>
   );
-}
-
-export default SymptomsList;
+};
 
 const styles = StyleSheet.create({
   appContainer: {
@@ -117,3 +117,5 @@ const styles = StyleSheet.create({
     flex: 4, // 4 fifths of the outer container's (appContainer) space
   },
 });
+
+export default SymptomsList;

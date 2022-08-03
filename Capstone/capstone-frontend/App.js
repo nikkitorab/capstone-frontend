@@ -10,67 +10,81 @@ import {
 import { useState } from "react";
 // import SymptomsList from "./components/SymptomsList";
 // import Symptom from "./components/Symptom";
+import { NavigationContainer } from "@react-navigation/native";
+import StackNavigator from "./StackNavigator";
 
 export default function App() {
-  const symptomsDataHardCoded = [
-    {
-      id: 1,
-      user_id: 3,
-      name: "cough",
-      rating_type: "num",
-    },
-    {
-      id: 2,
-      user_id: 4,
-      name: "sneeze",
-      rating_type: "num",
-    },
-  ];
-  //state for text input
-  const [enteredSymptomText, setEnteredSymptomText] = useState("");
-  const [symptomsData, setSymptomsData] = useState(symptomsDataHardCoded);
+  // const symptomsDataHardCoded = [
+  //   {
+  //     id: 1,
+  //     user_id: 3,
+  //     name: "cough",
+  //     rating_type: "num",
+  //   },
+  //   {
+  //     id: 2,
+  //     user_id: 4,
+  //     name: "sneeze",
+  //     rating_type: "num",
+  //   },
+  // ];
+  // //state for text input
+  // const [enteredSymptomText, setEnteredSymptomText] = useState("");
+  // const [symptomsData, setSymptomsData] = useState(symptomsDataHardCoded);
 
-  // const [symptomsData, setSymptomsData] = useState([]);
+  // // const [symptomsData, setSymptomsData] = useState([]);
 
-  // for symptom text input:
-  function symptomInputHandler(enteredText) {
-    setEnteredSymptomText(enteredText);
-    //store enteredText as state so it can be given to addSymptomHandler function
-  }
+  // // for symptom text input:
+  // function symptomInputHandler(enteredText) {
+  //   setEnteredSymptomText(enteredText);
+  //   //store enteredText as state so it can be given to addSymptomHandler function
+  // }
 
-  // add new symptom to user's symptom list
-  function addSymptomHandler() {
-    //CALL API --> ADD NEW SYMPTOM TO DB
-    //update symptomsData - append new symptom
+  // // add new symptom to user's symptom list
+  // function addSymptomHandler() {
+  //   //CALL API --> ADD NEW SYMPTOM TO DB
+  //   //update symptomsData - append new symptom
 
-    const newId = symptomsData.length; // change to get id from api
-    const newSymptom = {
-      id: newId, // change to get id from api
-      name: enteredSymptomText,
-    };
-    setSymptomsData((currentSymptomsData) => [
-      ...currentSymptomsData,
-      newSymptom,
-      // enteredSymptomText,
-    ]);
-  }
+  //   const newId = symptomsData.length; // change to get id from api
+  //   const newSymptom = {
+  //     id: newId, // change to get id from api
+  //     name: enteredSymptomText,
+  //   };
+  //   setSymptomsData((currentSymptomsData) => [
+  //     ...currentSymptomsData,
+  //     newSymptom,
+  //     // enteredSymptomText,
+  //   ]);
+  // }
+
+  // function deleteSymptomHandler() {
+  //   console.log("delete!!");
+  // }
 
   return (
-    <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Enter a Symptom"
-          onChangeText={symptomInputHandler}
-        />
-        <Button title="Add Symptom" onPress={addSymptomHandler} />
-      </View>
-      <View style={styles.symptomsContainer}>
-        {symptomsData.map((symptom) => (
-          <Text>{symptom.name}</Text>
-        ))}
-      </View>
-    </View>
+    <NavigationContainer>
+      <StackNavigator />
+      <StatusBar style="dark" />
+    </NavigationContainer>
+
+    // <View style={styles.appContainer}>
+    //   <View style={styles.inputContainer}>
+    //     <TextInput
+    //       style={styles.textInput}
+    //       placeholder="Enter a Symptom"
+    //       onChangeText={symptomInputHandler}
+    //     />
+    //     <Button title="Add Symptom" onPress={addSymptomHandler} />
+    //   </View>
+    //   <View style={styles.symptomsContainer}>
+    //     {symptomsData.map((symptom) => (
+    //       <View>
+    //         <Text key={symptom.id}>{symptom.name}</Text>
+    //         <Button title="Delete" onPress={deleteSymptomHandler} />
+    //       </View>
+    //     ))}
+    //   </View>
+    // </View>
   );
 }
 

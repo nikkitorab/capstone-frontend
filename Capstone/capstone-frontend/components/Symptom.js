@@ -1,19 +1,11 @@
-import {
-  StyleSheet,
-  Text,
-  Button,
-  View,
-  FlatList,
-  TextInput,
-} from "react-native";
-import { useState } from "react";
+import { StyleSheet, Text, Button, View } from "react-native";
 
-// const Symptom = (props) => {
 function Symptom(props) {
   const name = props.name;
+  const id = props.id;
 
-  const deleteSymptom = () => {
-    // props.deleteSymptomCallback(props.id);
+  const deleteSymptom = (id) => {
+    props.deleteSymptomCallback(id);
     console.log(name);
     console.log("hii");
   };
