@@ -4,8 +4,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 
-import Home from "./Home";
-import TriggersList from "./TriggersList";
+// import Home from "./Home";
+// import TriggersList from "./TriggersList";
 import Symptom from "./Symptom";
 
 import { useNavigation } from "@react-navigation/native";
