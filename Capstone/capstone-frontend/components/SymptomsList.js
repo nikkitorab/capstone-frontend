@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, Button } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,19 +14,41 @@ const SymptomsList = () => {
   //buttons to navigate to other screens:
   const navigation = useNavigation();
 
-  const symptomsDataHardCoded = [
-    {
-      id: 1,
-      name: "cough",
-    },
-    {
-      id: 2,
-      name: "sneeze",
-    },
-  ];
+  // const symptomsDataHardCoded = [
+  //   {
+  //     id: 1,
+  //     name: "cough",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "sneeze",
+  //   },
+  // ];
+
   //state for text input
   const [enteredSymptomText, setEnteredSymptomText] = useState("");
-  const [symptomsData, setSymptomsData] = useState(symptomsDataHardCoded);
+  //state for symptoms
+  const [symptomsData, setSymptomsData] = useState([]);
+
+  // GET SYMPTOMS FROM API:
+  const getSymptomsFromAPI = () => {
+    return (
+      fetch("http://localhost:3000/symptoms")
+        // return fetch("http:///10.0.2.2:3000/symptoms")
+        .then((response) => response.json())
+        .then((json) => {
+          console.log(json);
+          setSymptomsData(json);
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+    );
+  };
+
+  useEffect(() => {
+    getSymptomsFromAPI();
+  }, []);
 
   // for symptom text input:
   function symptomInputHandler(enteredText) {
