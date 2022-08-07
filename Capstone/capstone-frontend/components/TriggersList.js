@@ -1,19 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet, TextInput, Button } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
-
-// import Home from "./Home";
-// import SymptomsList from "./SymptomsList";
 import Trigger from "./Trigger";
 
-import { useNavigation } from "@react-navigation/native";
-
 const TriggersList = () => {
-  //buttons to navigate to other screens:
-  const navigation = useNavigation();
-
   const triggersDataHardCoded = [
     {
       id: 1,
@@ -75,11 +65,6 @@ const TriggersList = () => {
           />
         ))}
       </View>
-      <Button onPress={() => navigation.navigate("Home")} title="Home!" />
-      <Button
-        onPress={() => navigation.navigate("Symptoms")}
-        title="Symptoms List!"
-      />
     </View>
     // </SafeAreaView>
   );
